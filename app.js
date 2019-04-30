@@ -5,6 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
 
+// Modules used for sessions
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 const router = require('./routes/index'); 
 
 mongoose.connect('mongodb://localhost/basic-auth', {
@@ -24,6 +28,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Session middleware
+app.use(session({
+  secret: "basic-auth-secret",
+  cookie: { maxAge: 3600000 * 1 },	// 1 hour
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // Time to live - 1 day
+  })
+}));
 
 // Routes
 app.use('/', router);
