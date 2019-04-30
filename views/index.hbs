@@ -1,6 +1,20 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Home</h1>
+<p>Welcome - {{title}}</p>
 
-<a href="/signup">
-  <button type="button"> SIGN UP </button>
-</a>
+<div id="container">
+  <a href="/signup">
+    <button>Sign up</button>
+  </a>
+
+  <a href="/login">
+    <button>Login</button>
+  </a>
+  
+  <a href="/secret">
+    <button>Protected page (requires authentication!)</button>
+  </a>
+
+  <a href="/logout">
+    <button>Logout</button>
+  </a>
+</div>
